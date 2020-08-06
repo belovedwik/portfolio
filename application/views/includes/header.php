@@ -126,12 +126,36 @@
               </a>
             </li>
             <li>
+              <a href="<?= base_url() . adminPath; ?>/reviews">
+                <i class="fa fa-grav"></i>
+                <span>Reviews</span>
+              </a>
+            </li>
+            <li>
+              <a href="<?= base_url() . adminPath; ?>/news">
+                <i class="fa fa-grav"></i>
+                <span>News</span>
+              </a>
+            </li>
+            <li>
+              <a href="<?= base_url() . adminPath; ?>/freelance">
+                <i class="fa fa-credit-card"></i>
+                <span>Freelance</span>
+              </a>
+            </li>
+            <li>
+              <a href="<?= base_url() . adminPath; ?>/contact">
+                <i class="fa fa-user-o"></i>
+                <span>Contact</span>
+              </a>
+            </li>
+            <li>
               <a href="<?= base_url() . adminPath; ?>/users" >
                 <i class="fa fa-users"></i>
                 <span>Users</span>
               </a>
             </li>
-            <li class="treeview">
+            <li class="treeview" style="display:none">
               <a href="#">
                 <i class="fa fa-share"></i> <span>Multilevel</span>
                 <span class="pull-right-container">

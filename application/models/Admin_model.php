@@ -10,7 +10,7 @@ class admin_model extends Base_model
         
         $this->db->where('id', $id);
         $this->db->update('tbl_pages', $data);
-        
+          
         $this->db->trans_complete();
     }
     

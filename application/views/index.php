@@ -123,7 +123,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-header">
-                        <h2>About Myself</h2>
+                        <h2><?= $about->header ?> </h2>
                         <div class="line"></div>
                         <?= $about->short_text ?> 
                     </div>
@@ -153,7 +153,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-header">
-                        <h2>What I Do</h2>
+                        <h2><?= $services->header ?></h2>
                         <div class="line"></div> 
                         <?= $services->short_text ?> 
                     </div>
@@ -185,7 +185,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-header">
-                        <h2>Recent Projects</h2> 
+                        <h2><?= $project->header ?> </h2> 
                         <div class="line"></div> 
                         <?= $project->short_text ?>  
                     </div>
@@ -200,25 +200,47 @@
 									<li class="active">
 										<a class="img-filter" data-filter="*">All</a>
 									</li>
-									<li>
-										<a class="img-filter" data-filter=".web">Web</a>
-									</li>
-									<li>
-										<a class="img-filter" data-filter=".software">Software</a>
-									</li>
-									<li>
-										<a class="img-filter" data-filter=".graphics">Graphics</a> 
-									</li>
-									<li>
-										<a class="img-filter" data-filter=".apps">Apps</a>
-									</li>
-								</ul>
+                                    <?
+                                    $unic = array();
+                                    foreach($projectsImg as $proj)
+                                    {
+                                        if (!in_array($proj->short_text, $unic))
+                                            $unic[] = $proj->short_text;
+                                    }
+                                    
+                                    foreach($unic as $cat)
+                                    { ?>
+                                    <li>
+										<a class="img-filter" data-filter=".<?= $cat ?>"><?= ucfirst($cat) ?></a>
+									</li>    
+                                    <?
+                                    }
+                                    ?>
+                                  </ul>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="container">
 					<div class="row port-items" id="img-filter" style="position: relative; height: 570px;">
+                        <?
+                        foreach($projectsImg as $proj)
+                        {
+                        ?>
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 single-port <?= $proj->short_text ?>" style="position: absolute; left: 0px; top: 0px;">
+							<div class="project-item">
+								<a class="zoom1" href="images/<?= $proj->image?>"><img alt="portfolio image" src="images/<?= $proj->image?>">
+								<div class="overlay">
+									<div class="overlay-inner">
+										<h4><?= $proj->name ?></h4>
+										<p><?= $proj->short_text ?></p>
+									</div>
+								</div></a>
+							</div>
+						</div>
+                        <?
+                        }
+                        ?>
 						<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 single-port graphics" style="position: absolute; left: 0px; top: 0px;">
 							<div class="project-item">
 								<a class="zoom1" href="images/portfolio/port-5.jpg"><img alt="portfolio image" src="images/portfolio/port-1.jpg">
@@ -298,51 +320,24 @@
         <div class="row">
                 <div class="col-md-12">
                     <div class="section-header">
-                        <h2>What Clients say</h2>  
+                        <h2><?= $review->header ?></h2>  
                         <div class="line"></div> 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>  
+                        <p><?= $review->short_text ?></p>  
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="client-testimonial-carousel owl-carousel">
+                        <? foreach($reviewsList as $review) {?>
                         <div class="single-testimonial-item">
-                            <p>He Designed and Developed my Website and quite I am Satisfied with it. I strongly recommend him to everybody.</p> 
+                            <p><?= $review->short_text ?></p> 
                             <div class="img-clint">
-                                <img src="images/testimonial/1.jpg" alt="testimonial image"> <!--edit image--> 
+                                <img src="images/<?= $review->image ?>" alt="testimonial image"> <!--edit image--> 
                             </div>
-                            <h3>Joe Carl <span>Developer</span></h3>
+                            <h3><?= $review->name ?> <span><?= $review->header?></span></h3>
                         </div>
-                        <div class="single-testimonial-item">
-                            <p>He Designed and Developed my Website and quite I am Satisfied with it. I strongly recommend him to everybody.</p>
-                            <div class="img-clint">
-                                <img src="images/testimonial/2.jpg" alt="testimonial image"> <!--edit image-->
-                            </div>
-                            <h3>David Wood <span>Designer</span></h3>
-                        </div>
-                        <div class="single-testimonial-item">
-                            <p>He Designed and Developed my Website and quite I am Satisfied with it. I strongly recommend him to everybody.</p>
-                            <div class="img-clint">
-                                <img src="images/testimonial/3.jpg" alt="testimonial image"> <!--edit image-->
-                            </div>
-                            <h3>Patrik Jones <span>Marketer</span></h3>
-                        </div>
-                        <div class="single-testimonial-item">
-                            <p>He Designed and Developed my Website and quite I am Satisfied with it. I strongly recommend him to everybody.</p>
-                            <div class="img-clint">
-                                <img src="images/testimonial/4.jpg" alt="testimonial image"> <!--edit image-->
-                            </div>
-                            <h3>Jimmie Dale <span>Physician</span></h3>
-                        </div>
-                        <div class="single-testimonial-item">
-                            <p>He Designed and Developed my Website and quite I am Satisfied with it. I strongly recommend him to everybody.</p>  
-                            <div class="img-clint">
-                                <img src="images/testimonial/5.jpg" alt="testimonial image"> <!--edit image-->
-                            </div>
-                            <h3>Alan Walker <span>Pharmacist</span></h3> 
-                        </div>
-
+                        <? } ?>
                     </div>
                 </div>
             </div>
@@ -356,8 +351,8 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="single-offer">
-                        <h2>Available for Freelance</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio accusantium amet repellat omnis quas nihil!</p>
+                        <h2><?= $freelance->header ?></h2>
+                        <p><?= $freelance->short_text ?></p>
                         <a href="#contact" class="offer-btn">Hire Me</a> 
                     </div>
                 </div>
@@ -372,132 +367,32 @@
             <div class="row">
                 <div class="col-md-12"> 
                     <div class="section-header">
-                        <h2>News Feed</h2>  
+                        <h2><?= $news->header ?></h2>  
                         <div class="line"></div> 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>  
+                        <p><?= $news->short_text ?></p>  
                     </div>
                 </div> 
             </div>
             <div class="row">
+                <? foreach($newsList as $item) {?>
                 <div class="col-md-4">
                     <div class="single-blog">
                         <div class="img-area">
-                            <img src="images/blog/1.jpg" alt="">
+                            <img src="images/<?= $item->image?>" alt="">
                         </div>
                         <div class="img-details">
                             <div class="dates">
-                                <h4>October 29,2019</h4>
+                                <h4><?= date( "Y-m-d", strtotime( $item->createDT)) ?></h4>
                             </div>
                             <div class="titles">
-                                <h3>Virtual Memory Palace of your Notes</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam adipisci officia pariatur alias excepturi, suscipit.</p>
-                                <a href="#"><i class="fa fa-arrow-right"></i>Read More</a> 
+                                <h3><?= $item->name ?></h3>
+                                <p><?= $item->short_text ?></p>
+                                <!--a href="#"><i class="fa fa-arrow-right"></i>Read More</a--> 
                             </div>
                         </div>
                     </div>
                 </div>
-                   <div class="col-md-4">
-                    <div class="single-blog">
-                        <div class="img-area">
-                            <img src="images/blog/1.jpg" alt="">
-                        </div>
-                        <div class="img-details">
-                            <div class="dates">
-                                <h4>October 29,2019</h4>
-                            </div>
-                            <div class="titles">
-                                <h3>Virtual Memory Palace of your Notes</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam adipisci officia pariatur alias excepturi, suscipit.</p>
-                                <a href="#"><i class="fa fa-arrow-right"></i>Read More</a> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="single-blog">
-                        <div class="img-area">
-                            <img src="images/blog/1.jpg" alt="">
-                        </div>
-                        <div class="img-details">
-                            <div class="dates">
-                                <h4>October 29,2019</h4>
-                            </div>
-                            <div class="titles">
-                                <h3>Virtual Memory Palace of your Notes</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam adipisci officia pariatur alias excepturi, suscipit.</p>
-                                <a href="#"><i class="fa fa-arrow-right"></i>Read More</a> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                   <div class="col-md-4">
-                    <div class="single-blog">
-                        <div class="img-area">
-                            <img src="images/blog/1.jpg" alt="">
-                        </div>
-                        <div class="img-details">
-                            <div class="dates">
-                                <h4>October 29,2019</h4>
-                            </div>
-                            <div class="titles">
-                                <h3>Virtual Memory Palace of your Notes</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam adipisci officia pariatur alias excepturi, suscipit.</p>
-                                <a href="#"><i class="fa fa-arrow-right"></i>Read More</a> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                   <div class="col-md-4">
-                    <div class="single-blog">
-                        <div class="img-area">
-                            <img src="images/blog/1.jpg" alt="">
-                        </div>
-                        <div class="img-details">
-                            <div class="dates">
-                                <h4>October 29,2019</h4>
-                            </div>
-                            <div class="titles">
-                                <h3>Virtual Memory Palace of your Notes</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam adipisci officia pariatur alias excepturi, suscipit.</p>
-                                <a href="#"><i class="fa fa-arrow-right"></i>Read More</a> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="single-blog">
-                        <div class="img-area">
-                            <img src="images/blog/2.jpg" alt="">
-                        </div>
-                        <div class="img-details">
-                            <div class="dates">
-                                <h4>November 15,2019</h4>
-                            </div>
-                            <div class="titles">
-                                <h3>Website Design Ideas to Follow in 2020</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam adipisci officia pariatur alias excepturi, suscipit.</p>
-                                <a href="#"><i class="fa fa-arrow-right"></i>Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="single-blog">
-                        <div class="img-area">
-                            <img src="images/blog/3.jpg" alt=""> 
-                        </div>
-                        <div class="img-details">
-                            <div class="dates">
-                                <h4>January 12,2020</h4> 
-                            </div>
-                            <div class="titles">
-                                <h3>WordPress Data Visualization Plugins</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam adipisci officia pariatur alias excepturi, suscipit.</p> 
-                                <a href="#"><i class="fa fa-arrow-right"></i>Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <? } ?>
             </div>
         </div>
     </div>  
@@ -509,9 +404,9 @@
             <div class="row">
                 <div class="col-md-12"> 
                     <div class="section-header">
-                        <h2>Contact</h2>  
+                        <h2><?= $contact->header?></h2>  
                         <div class="line"></div> 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>  
+                        <p><?= $contact->short_text?></p>  
                     </div>
                 </div> 
             </div>
@@ -535,7 +430,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input id="form_email" type="email" name="email" class="form-control" placeholder="Your Email" required="required" data-error="Email Required">
+                                    <input id="form_email" type="email" name="email" class="form-control" placeholder="Your Email" data-error="Email Required">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
@@ -543,7 +438,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input id="form_subject" type="text" name="name" class="form-control" placeholder="Your Topic" required="required" data-error="Subject Required">
+                                    <input id="form_subject" type="text" name="title" class="form-control" placeholder="Your Topic" data-error="Subject Required">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>

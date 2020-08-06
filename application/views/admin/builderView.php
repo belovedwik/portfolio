@@ -1,65 +1,61 @@
-<script src="<?= base_url()?>components/ckeditor/ckeditor.js"></script>
-
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-address-card-o"></i> About
-        <small>Myself</small>
-      </h1>
-    </section>
-    
-    <section class="content">
-    
         <div class="row">
             <!-- left column -->
-            <div class="col-md-8">
+            <div class="col-md-9">
               <!-- general form elements -->
                 
                 <div class="box box-primary">
+                    <!--
                     <div class="box-header">
-                        <h3 class="box-title">Edit About Myself</h3>
+                        <h3 class="box-title">Edit Info</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <?php $this->load->helper("form"); ?>
-                    <form role="form" id="editAbout" action="<?= base_url() . adminPath ?>/about" method="post" role="form">
+                    <form role="form" id="editForm" action="<?= base_url() . adminPath ?>/<?= $topPage ?>" method="post" role="form">
                         <div class="box-body">
+                            <? 
+                            foreach ($fields as $k=>$field)
+                            {
+                            ?>
                             <div class="row">
                                 <div class="col-md-10">                                
                                     <div class="form-group">
-                                        <label for="short_text">About short</label>
-                                        <textarea class="form-control required" id="short_text" name="short_text" rows="5"><?= $about->short_text ?></textarea>
+                                        <label for="short_text"><?= $field[0] ?></label>
+                                        <? 
+                                        switch ($field[2]) { // field type
+                                            case "text": 
+                                            {
+                                            ?>
+                                            <input type="text" class="form-control required" id="<?= $k ?>" name="<?= $k ?>" value="<?= $row->$k ?>" />
+                                            <? 
+                                            }
+                                            break;
+                                            case "textarea": 
+                                            {
+                                            ?>
+                                            <textarea class="form-control required" id="<?= $k ?>" name="<?= $k ?>"><?= $row->$k ?></textarea>
+                                            <? 
+                                            }
+                                            break;
+                                        } ?>
+                                        
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-10">                                
-                                    <div class="form-group">
-                                        <label for="fname">Specialization</label>
-                                        <input type="text" class="form-control required" value="<?= $about->name?>" id="name" name="name" maxlength="128">
-                                    </div>
-                                </div>
-                            </div>
-                  
-                            <div class="row">
-                                <div class="col-md-10">                                
-                                    <div class="form-group">
-                                        <label for="fname">About full</label>
-                                        <textarea class="form-control required" id="full_text" name="full_text" rows="8"><?= $about->full_text ?></textarea>
-                                    </div>
-                                </div>
-                            </div>
+                            <? 
+                            } 
+                            ?>
+                       
                         </div>
-                         <script>
-        CKEDITOR.replace('short_text', {
-          height: 120,
-          width: 750,
-        });
-        CKEDITOR.replace('full_text', {
-          height: 270,
-          width: 750,
-        });
-  </script>
+                   <script>
+                        CKEDITOR.replace('short_text', {
+                          height: 120,
+                          width: 750,
+                        });
+                        CKEDITOR.replace('full_text', {
+                          height: 270,
+                          width: 750,
+                        });
+                  </script>
                         <!-- /.box-body -->
     
                         <div class="box-footer">
@@ -69,7 +65,7 @@
                     </form>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <?php
                     $this->load->helper('form');
                     $error = $this->session->flashdata('error');
@@ -99,6 +95,3 @@
                 </div>
             </div>
         </div>    
-    </section>
-    
-</div>

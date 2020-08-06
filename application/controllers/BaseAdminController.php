@@ -28,7 +28,7 @@ class BaseAdminController extends BaseController {
         }
     }
     
-    protected function updateFields($variables, $id, $pageType)
+    protected function updateFields($variables, $id)
     {
         $this->load->library('form_validation');
     
@@ -36,23 +36,49 @@ class BaseAdminController extends BaseController {
         {
             $this->form_validation->set_rules($k, $val[0], $val[1]);
         }
-   
+
         if($this->form_validation->run() != FALSE)
         {
-            $short_text = $this->input->post('short_text');
-            
             $data = array('updateDT'=>date('Y-m-d H:i:s'));
             foreach ($variables as $k=>$val)
             {
+                if ($k == 'image') // $val[2] == 'img'
+                    continue;
                 $data[$k] = $this->input->post($k); 
             }
             $this->admin_model->updatePage($id, $data);
             
             $this->session->set_flashdata('success', 'Data updated!');
+            return true;
+         }      
+        return false;
+    }
+    
+    protected function insertFields($fields, $parentId, $pageType)
+    {
+        $insertedId = null;
+        $this->load->library('form_validation');
+        
+        foreach ($fields as $k=>$val)
+        {
+            $this->form_validation->set_rules($k, $val[0], $val[1]);
+        }
+   
+        if($this->form_validation->run() != FALSE)
+        {
+            $data = array(  'updateDT'=>date('Y-m-d H:i:s'), 'parent' => $parentId, 'pageType' => $pageType);
+            foreach ($fields as $k=>$val)
+            {
+                $data[$k] = $this->input->post($k); 
+            }
+            $insertedId = $this->admin_model->insertPage($pageType, $data);
             
-            redirect( adminPath . '/'. $pageType);
+            $this->session->set_flashdata('success', 'Data inserted!');
+            return $insertedId;
          }
     }
+    
+    
     
     /*
     public function forum_add()
@@ -71,15 +97,14 @@ class BaseAdminController extends BaseController {
     }
     */
     
-    public function UploadImage($fileName, $width = 350, $height = 350, $folder = '')
+    protected function UploadImage($fileName, $width = 350, $height = 350, $folder = '')
     {
         $config['upload_path']      = './images/'.$folder;
         $config['allowed_types']    = 'gif|jpg|png';
         $config['file_name']    = $fileName;
         $this->load->library('upload', $config);
         $imgLink = "";
-        
-        if($this->upload->do_upload('upload_file', $config)) //load image
+        if($this->upload->do_upload('image', $config)) //load image
         {
             $fInfo = $this->upload->data(); // get all info of uploaded file
 
@@ -97,8 +122,11 @@ class BaseAdminController extends BaseController {
 
             $imgInfo = $this->upload->data();
             $imgLink = $imgInfo['file_name'];
+        } else {
+            $this->session->set_flashdata('error', 'Check if dir "'.$config['upload_path'].'" is writeable');
         }
-        return $imgLink;
+    
+        return $folder.$imgLink;
     }
 	
 }

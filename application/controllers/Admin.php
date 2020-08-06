@@ -21,97 +21,199 @@ class Admin extends BaseAdminController
         $this->load->model('admin_model');
     }
 
+
     
     /**
      * Index Page for this controller.
      */
     public function index($page = '', $subpage = '', $id = 0)
     {
+        $this->data['topPage'] = $page;
+        
+        // delete row
+        if ($subpage == 'deleteRow')
+        {
+            $this->deleteRow($id);
+            return;
+        }
+
         switch($page)
         {
+            case "contact": 
+            {
+                $this->data['pageTitle'] = 'Contact';
+                $variables = array(
+                    'header' => array('Header', 'trim|required|min_length[3]', 'text'),
+                    'short_text' => array('Short Text', 'trim|required|min_length[20]', 'textarea'),
+                );
+                
+                $this->SetupPage($page, $variables);
+                 
+                $this->loadViews('admin/builder', $this->data);
+            }
+            break;
             case "about": 
             {
-                $this->data['about'] = $this->admin_model->getPage('about');  
-                $sbm = $this->input->post('sbm');
-                if ($sbm)
-                {
-                    $this->editAbout($this->data['about']->id);
-                }
+                $this->data['pageTitle'] = 'About';
+                $variables = array(
+                    'header' => array('Header', 'trim|required|min_length[3]', 'text'),
+                    'short_text' => array('Short Text', 'trim|required|min_length[20]', 'textarea'),
+                    'name' => array('Specialization', 'trim|required|min_length[5]', 'text'),
+                    'full_text' => array('Full Text', 'trim|required|min_length[20]', 'textarea'),
+                );
+                
+                $this->SetupPage($page, $variables);
                  
-                $this->loadViews('admin/about', $this->data);
+                $this->loadViews('admin/builder', $this->data);
             }
             break;
             case "projects": 
             {
+                // project desc
+                $this->data['pageTitle'] = 'Projects';
+                $variables = array(
+                    'header' => array('Header', 'trim|required|min_length[3]', 'text'),
+                    'short_text' => array('Project short text', 'trim|required|min_length[10]', 'textarea'),
+                );
+                $parentId = $this->SetupPage($page, $variables);
+                
+                // projects rows
+                $this->data['pageSubTitle'] = 'Project Images';
                 $this->data['act'] = 'view'; 
-                $this->data['project'] = $this->admin_model->getPage('projects');
-                $parentId = $this->data['project']->id;
-                $this->data['editRow'] = (object) array('id'=>null, 'name' => null ,'short_text' => null, 'full_text' => null);
+                $this->data['editRow'] = (object) array('id'=>null, 'name' => null, 'short_text' => null, 'image' => null, 'createDT' => date("Y-m-d") );
                 
-                // edit main text
-                $sbm = $this->input->post('sbm');
-                if ($sbm)
-                {
-                    $this->editDescription($parentId, $page);
-                }
-                
-                // add/edit service icon
-                $editProject = $this->input->post('editProject');
-                if ($editService)
-                {
-                    $rowId = $this->input->post('rowId');
-                    if ($rowId > 0)
-                        $this->updateProjectIcon($rowId);
-                    else
-                        $this->addProjectIcon($parentId);
-                }
-                $this->data['projectImgs'] = $this->admin_model->getPage('projects', $parentId, 100 );
-                
-                $this->loadViews('admin/projects', $this->data);
-            }
-            break;
-            case "services": 
-            {
-                // delete row
-                if ($subpage == 'deleteRow')
-                {
-                    $this->deleteRow($id);
-                    return;
-                }
-             
-                // edit row
-                $this->data['act'] = 'view'; 
-                $this->data['editRow'] = (object) array('id'=>null, 'name' => null ,'short_text' => null, 'full_text' => null);
                 if ($subpage == 'edit')
                 {
                     $this->data['act'] = 'edit'; 
                     $this->data['editRow'] = $this->admin_model->getPageById($id);
                 }
-                    
-                $this->data['service'] = $this->admin_model->getPage('services');
-                $parentId = $this->data['service']->id;
                 
-                // edit main text
-                $sbm = $this->input->post('sbm');
-                if ($sbm)
+                $subFields = array(
+                   'image' => array('Img', 'trim|xss_clean', 'img'),
+                   'short_text' => array('Category', 'trim|required|min_length[3]', 'text'),
+                   'name' => array('Title', 'trim|required|min_length[3]', 'text'),
+                   'createDT' => array('Created On', 'trim|required|min_length[3]', 'date'),
+                   );
+                
+                $imgSetting = array('fileName'=>'proj_', 'width' => 1000, 'height' => 600, 'folder' => 'projects/');
+                $this->SetupRows($page, $subFields, $parentId, $imgSetting);
+                
+                $this->loadViews('admin/multiBuilder', $this->data);
+            }
+            break;
+            case "services": 
+            {
+                // project desc
+                $this->data['pageTitle'] = 'Services';
+                $variables = array(
+                    'header' => array('Header', 'trim|required|min_length[3]', 'text'),
+                    'short_text' => array('Project short text', 'trim|required|min_length[10]', 'textarea'),
+                );
+                $parentId = $this->SetupPage($page, $variables);
+                
+                // service rows
+                $this->data['pageSubTitle'] = 'Service row';
+                $this->data['act'] = 'view'; 
+                $this->data['editRow'] = (object) array('id'=>null, 'short_text' => null, 'name' => null, 'full_text' => null, 'createDT' => date("Y-m-d") );
+                
+                if ($subpage == 'edit')
                 {
-                    $this->editDescription($parentId, $page);
-                    return;
+                    $this->data['act'] = 'edit'; 
+                    $this->data['editRow'] = $this->admin_model->getPageById($id);
                 }
-               
-                // add/edit service icon
-                $editService = $this->input->post('editService');
-                if ($editService)
+                
+                $subFields = array(
+                   'short_text' => array('Icon class', 'trim|required|min_length[3]', 'text'),
+                   'name' => array('Title', 'trim|required|min_length[3]', 'text'),
+                   'full_text' => array('Short desc ', 'trim|xss_clean', 'text'),
+                   'createDT' => array('Created On', 'trim|required|min_length[3]', 'date'),
+                   );
+                
+                $this->SetupRows($page, $subFields, $parentId);
+                
+                $this->loadViews('admin/multiBuilder', $this->data);
+            }
+            break;
+            case "reviews": 
+            {
+                // project desc
+                $this->data['pageTitle'] = 'Reviews';
+                $variables = array(
+                    'header' => array('Header', 'trim|required|min_length[3]', 'text'),
+                    'short_text' => array('Project short text', 'trim|required|min_length[10]', 'textarea'),
+                );
+                $parentId = $this->SetupPage($page, $variables);
+                
+                // service rows
+                $this->data['pageSubTitle'] = 'Clients Review ';
+                $this->data['act'] = 'view'; 
+                $this->data['editRow'] = (object) array('id'=>null, 'short_text' => null, 'name' => null, 'header' => null, 'image' => null,  'createDT' => date("Y-m-d") );
+                
+                if ($subpage == 'edit')
                 {
-                    $rowId = $this->input->post('rowId');
-                    if ($rowId > 0)
-                        $this->updateServiceIcon($rowId);
-                    else
-                        $this->addServiceIcon($parentId);
+                    $this->data['act'] = 'edit'; 
+                    $this->data['editRow'] = $this->admin_model->getPageById($id);
                 }
-                $this->data['serviceIcons'] = $this->admin_model->getPage('services', $parentId, 100 );
-              
-                $this->loadViews('admin/services', $this->data);
+                
+                $subFields = array(
+                   'short_text' => array('Client review', 'trim|required|min_length[10]', 'text'),
+                   'name' => array('Client Name', 'trim|required|min_length[3]', 'text'),
+                   'header' => array('Position', 'trim|required|min_length[3]', 'text'),
+                   'image' => array('Client Pic', 'trim|xss_clean', 'img'),
+                   'createDT' => array('Created On', 'trim|required|min_length[3]', 'date'),
+                   );
+                
+                $imgSetting = array('fileName'=>'review_', 'width' => 100, 'height' => 80, 'folder' => 'review/');
+                $this->SetupRows($page, $subFields, $parentId, $imgSetting);
+                
+                $this->loadViews('admin/multiBuilder', $this->data);
+            }
+            break;
+            case "news": 
+            {
+                // project desc
+                $this->data['pageTitle'] = 'News';
+                $variables = array(
+                    'header' => array('Header', 'trim|required|min_length[3]', 'text'),
+                    'short_text' => array('Project short text', 'trim|required|min_length[10]', 'textarea'),
+                );
+                $parentId = $this->SetupPage($page, $variables);
+                
+                // service rows
+                $this->data['pageSubTitle'] = 'News blocks';
+                $this->data['act'] = 'view'; 
+                $this->data['editRow'] = (object) array('id'=>null, 'short_text' => null, 'name' => null, 'image' => null,  'createDT' => date("Y-m-d") );
+                
+                if ($subpage == 'edit')
+                {
+                    $this->data['act'] = 'edit'; 
+                    $this->data['editRow'] = $this->admin_model->getPageById($id);
+                }
+                
+                $subFields = array(
+                   'short_text' => array('Short text', 'trim|required|min_length[10]', 'text'),
+                   'name' => array('Title', 'trim|required|min_length[3]', 'text'),
+                   'image' => array('Pic', 'trim|xss_clean', 'img'),
+                   'createDT' => array('Created On', 'trim|required|min_length[3]', 'date'),
+                   );
+                
+                $imgSetting = array('fileName'=>'review_', 'width' => 100, 'height' => 80, 'folder' => 'review/');
+                $this->SetupRows($page, $subFields, $parentId, $imgSetting);
+                
+                $this->loadViews('admin/multiBuilder', $this->data);
+            }
+            break;
+            case "freelance": 
+            {
+                $this->data['pageTitle'] = 'Freelance';
+                $variables = array(
+                    'header' => array('Header', 'trim|required|min_length[3]', 'text'),
+                    'short_text' => array('Short Text', 'trim|required|min_length[20]', 'textarea'),
+                );
+                
+                $this->SetupPage($page, $variables);
+                 
+                $this->loadViews('admin/builder', $this->data);
             }
             break;
             case "profile": 
@@ -127,111 +229,48 @@ class Admin extends BaseAdminController
         }
     }
     
-  
-    
-    private function updateServiceIcon($rowId)
+    private function SetupRows($page, $subFields, $parentId, $imgSetting = null)
     {
-    
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('name','Name','trim|required|min_length[3]');
-        $this->form_validation->set_rules('short_text','Short Text','trim|required|min_length[3]');
-        $this->form_validation->set_rules('full_text','Full Text','trim|required|min_length[10]');
-        
-        if($this->form_validation->run() != FALSE)
+        $this->data['subFields'] = $subFields;
+                
+        // add/edit service icon
+        $editRecord = $this->input->post('editRecord');
+        if ($editRecord)
         {
-            $short_text = $this->input->post('short_text');
-            $name = $this->input->post('name');
-            $full_text = $this->input->post('full_text');
-            
-            $data = array( 'name'=>$name, 'short_text'=>$short_text, 'full_text'=>$full_text,  'updateDT'=>date('Y-m-d H:i:s'));
-            $this->admin_model->updatePage($rowId, $data);
-            
-            $this->session->set_flashdata('success', 'Icon added');
-         }
-    }
-    
-    private function addServiceIcon($parentId)
-    {
-    
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('name','Name','trim|required|min_length[3]');
-        $this->form_validation->set_rules('short_text','Short Text','trim|required|min_length[3]');
-        $this->form_validation->set_rules('full_text','Full Text','trim|required|min_length[10]');
-        
-        if($this->form_validation->run() != FALSE)
-        {
-            $short_text = $this->input->post('short_text');
-            $name = $this->input->post('name');
-            $full_text = $this->input->post('full_text');
-            
-            $data = array( 'pageType' => 'services', 'parent'=> $parentId, 'name'=>$name, 'short_text'=>$short_text, 'full_text'=>$full_text,  'updateDT'=>date('Y-m-d H:i:s'));
-            $this->admin_model->insertPage('services', $data);
-            
-            $this->session->set_flashdata('success', 'Icon added');
-         }
-    }
-    
-   
-    
-   
-    
-   
-    
-    private function editDescription($parentId, $back)
-    {
-  
-        $this->load->library('form_validation');
-    
-        $this->form_validation->set_rules('short_text','Short Text','trim|required|min_length[20]');
-        
-        if($this->form_validation->run() != FALSE)
-        {
-            $short_text = $this->input->post('short_text');
-            $data = array('short_text'=>$short_text, 'updateDT'=>date('Y-m-d H:i:s'));
-            $this->admin_model->updatePage($parentId, $data);
-            
-            $this->session->set_flashdata('success', 'Text updated');
-            
-            redirect( adminPath . '/'. $back);
-         }
-    }
-    
-    private function editAbout($id)
-    {
-        $variables = array(
-            'name' => array('Specialization', 'trim|required|min_length[20]'),
-            'full_text' => array('Full Text', 'trim|required|min_length[20]'),
-            'short_text' => array('Short Text', 'trim|required|min_length[20]'),
-            
-        );
-        
-        $this->updateFields($variables, $id, 'about');
-            
-        /*
-        $this->load->library('form_validation');
-            
-        $this->form_validation->set_rules('spec','Full Name','trim|required|min_length[10]');
-        $this->form_validation->set_rules('full_text','Full Text','trim|required|min_length[20]');
-        $this->form_validation->set_rules('short_text','Short Text','trim|required|min_length[20]');
-        
-        if($this->form_validation->run() != FALSE)
-        {
-            $spec = $this->input->post('spec');
-            $full_text = $this->input->post('full_text');
-            $short_text = $this->input->post('short_text');
+            $rowId = $this->input->post('rowId');
+            if ($rowId > 0)
+                $this->updateFields($subFields, $rowId);
+            else
+                $rowId = $this->insertFields($subFields, $parentId, $page);
+           
+            if ($imgSetting && !empty($_FILES['image']['name']))
+            {
+                $src = $this->UploadImage($imgSetting['fileName'] . $rowId, $imgSetting['width'], $imgSetting['height'], $imgSetting['folder'] );
+                $this->admin_model->updatePage($rowId, array('image'=> $src));
+            }
 
-            $data = array('name'=>$spec, 'full_text'=>$full_text, 'short_text'=>$short_text, 'updateDT'=>date('Y-m-d H:i:s'));
-            $this->admin_model->updatePage($parentId, $data);
-
-            $this->session->set_flashdata('success', 'About updated');
-
-            redirect( adminPath . '/about');
+            redirect( adminPath . '/'. $page);
         }
-        */
-        
+        $this->data['recordList'] = $this->admin_model->getPage($page, $parentId, 100 );
     }
+    
+    private function SetupPage($page, $variables)
+    {
+        $this->data['row'] = $this->admin_model->getPage($page);  
+        $id = $this->data['row']->id;
 
-   
+        $this->data['fields'] = $variables;
+
+        $sbm = $this->input->post('sbm');
+        if ($sbm)
+        {
+            if ($this->updateFields($variables, $id, $page))
+                redirect( adminPath . '/'. $page);
+        }
+        
+        return $id;
+    }
+    
     
     private function profile($subpage = '')
     {

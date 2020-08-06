@@ -1,0 +1,255 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.1
+-- https://www.phpmyadmin.net/
+--
+-- Хост: 127.0.0.1
+-- Время создания: Авг 06 2020 г., 15:01
+-- Версия сервера: 10.4.6-MariaDB
+-- Версия PHP: 7.3.11
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- База данных: `belovedwik`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `ci_sessions`
+--
+
+CREATE TABLE `ci_sessions` (
+  `session_id` varchar(40) NOT NULL DEFAULT '0',
+  `ip_address` varchar(45) NOT NULL DEFAULT '0',
+  `user_agent` varchar(120) NOT NULL,
+  `last_activity` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `user_data` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `tbl_last_login`
+--
+
+CREATE TABLE `tbl_last_login` (
+  `id` bigint(20) NOT NULL,
+  `userId` bigint(20) NOT NULL,
+  `sessionData` varchar(2048) NOT NULL,
+  `machineIp` varchar(1024) NOT NULL,
+  `userAgent` varchar(128) NOT NULL,
+  `agentString` varchar(1024) NOT NULL,
+  `platform` varchar(128) NOT NULL,
+  `createdDtm` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `tbl_last_login`
+--
+
+--
+-- Структура таблицы `tbl_pages`
+--
+
+CREATE TABLE `tbl_pages` (
+  `id` int(11) NOT NULL,
+  `parent` int(11) DEFAULT 0,
+  `createDT` datetime NOT NULL DEFAULT current_timestamp(),
+  `updateDT` datetime NOT NULL,
+  `pageType` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `header` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `keywords` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `short_text` text DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `full_text` text DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `tbl_pages`
+--
+
+INSERT INTO `tbl_pages` (`id`, `parent`, `createDT`, `updateDT`, `pageType`, `header`, `description`, `keywords`, `short_text`, `name`, `full_text`, `image`) VALUES
+(1, 0, '2020-08-02 19:21:34', '2020-08-03 21:29:24', 'about', 'About MySelf', NULL, NULL, '<p>About&nbsp;About&nbsp;About</p>', 'Full Stack Developer', '<p>This system used by thousands of people My experience includes:</p>\r\n\r\n<p>&bull; PBX connection to CRM and other software systems;</p>\r\n\r\n<p>&bull; creation and support of the Extranet resources;</p>\r\n\r\n<p>&bull; setting up Email, FTP, WEB servers;</p>\r\n\r\n<p>&bull; creation of web services for the exchange of XML/JSON data;</p>\r\n\r\n<p>&bull; creating your own CMS (С#, PHP);</p>\r\n\r\n<p>&bull; Parallel &amp; Asynchronous programming &bull; completion of client-server telephony applications, multi-threaded programming (С# back-end, C# WPF front-end); &bull; creating IoC, UnitTest; &bull; an implementing of call center monitoring tools; &bull; auto-dialing; &bull; Text-To-Speech and Speech-To-Text capabilities; &bull; an integration with other communication services (chat:Telegram,Messanger,Viber), etc; I&#39;ve honed my skills as a freelancer. I have a real passion for all things software/hardware. I also have excellent Ubuntu/Debian/CentOS Linux administration skills and have managed a large number of different servers. If you&#39;re after a serious and capable programmer then look no further.</p>\r\n\r\n<p>&nbsp;</p>', NULL),
+(2, 0, '2020-08-02 20:34:31', '2020-08-05 20:59:59', 'services', 'What can i do?', NULL, NULL, '<p>Services&nbsp;super short description</p>\r\n\r\n<p>&nbsp;</p>', 'Full Stack Developer', '<p>This system used by thousands of people My experience includes:</p>\r\n\r\n<p>&bull; PBX connection to CRM and other software systems;</p>\r\n\r\n<p>&bull; creation and support of the Extranet resources;</p>\r\n\r\n<p>&bull; setting up Email, FTP, WEB servers;</p>\r\n\r\n<p>&bull; creation of web services for the exchange of XML/JSON data;</p>\r\n\r\n<p>&bull; creating your own CMS (С#, PHP);</p>\r\n\r\n<p>&bull; Parallel &amp; Asynchronous programming &bull; completion of client-server telephony applications, multi-threaded programming (С# back-end, C# WPF front-end); &bull; creating IoC, UnitTest; &bull; an implementing of call center monitoring tools; &bull; auto-dialing; &bull; Text-To-Speech and Speech-To-Text capabilities; &bull; an integration with other communication services (chat:Telegram,Messanger,Viber), etc; I&#39;ve honed my skills as a freelancer. I have a real passion for all things software/hardware. I also have excellent Ubuntu/Debian/CentOS Linux administration skills and have managed a large number of different servers. If you&#39;re after a serious and capable programmer then look no further.</p>\r\n\r\n<p>&nbsp;</p>', NULL),
+(4, 2, '2020-08-03 00:14:37', '2020-08-02 21:14:37', 'services', NULL, NULL, NULL, 'icon-strategy', 'Web Development', 'Lorem ipsum dolor sit amet, sit augue theophrastus ex.', NULL),
+(5, 2, '2020-08-03 00:15:46', '2020-08-02 22:18:55', 'services', NULL, NULL, NULL, 'con-key', 'Web Design', 'Lorem ipsum dolor sit amet, sit augue theophrastus ex.', NULL),
+(6, 2, '2020-08-03 00:17:20', '2020-08-02 21:17:20', 'services', NULL, NULL, NULL, 'icon-gears', 'Site constructor', 'Lorem ipsum dolor sit amet, sit augue theophrastus ex.', NULL),
+(7, 2, '2020-08-03 00:18:17', '2020-08-02 21:18:17', 'services', NULL, NULL, NULL, 'icon-genius', 'C# training', 'Lorem ipsum dolor sit amet, sit augue theophrastus ex.', NULL),
+(9, 0, '2020-08-03 01:33:50', '2020-08-05 20:58:13', 'projects', 'My projects', NULL, NULL, '<p>Editp 1 2 3 4 5 1 2 3 4 5 11</p>', NULL, NULL, NULL),
+(10, 0, '2020-08-04 02:24:26', '2020-08-03 23:24:58', 'freelance', 'Available for Freelanc', NULL, NULL, '<p>Buy one get one free</p>', NULL, NULL, NULL),
+(12, 9, '0000-00-00 00:00:00', '2020-08-04 13:50:10', NULL, NULL, NULL, NULL, 'icon-strategy', 'Давиденко Виктор', NULL, 'wik_profile.jpg'),
+(28, 9, '2005-08-20 20:00:00', '2020-08-05 16:53:16', 'projects', NULL, NULL, NULL, 'cat1', 'wik2', NULL, 'projects/proj_28.png'),
+(29, 9, '2005-08-20 20:00:00', '2020-08-05 21:05:11', 'projects', NULL, NULL, NULL, 'cat2', 'title1', NULL, 'projects/proj_29.jpg'),
+(30, 9, '2005-08-20 20:00:00', '2020-08-05 21:05:54', 'projects', NULL, NULL, NULL, 'cat2', 'title3', NULL, 'projects/proj_30.png'),
+(31, 0, '2020-08-06 00:32:54', '2020-08-05 21:33:32', 'reviews', 'What Clients say?', NULL, NULL, '<p>Client rewviews</p>', NULL, NULL, NULL),
+(32, 31, '2005-08-20 20:00:00', '2020-08-05 21:43:13', 'reviews', 'Product', NULL, NULL, 'He is very good boy', 'Peterson', NULL, 'projects/proj_32.png'),
+(33, 31, '2005-08-20 20:00:00', '2020-08-05 21:44:00', 'reviews', 'Head of IT solution', NULL, NULL, 'This is review, hi is like superman', 'Ivan ivanov', NULL, 'review/review_33.jpg'),
+(34, 31, '2005-08-20 20:00:00', '2020-08-05 21:44:35', 'reviews', 'main', NULL, NULL, 'icon-compass', 'Виктор', NULL, 'review/review_34.png'),
+(35, 0, '2020-08-06 00:49:59', '2020-08-05 21:54:28', 'news', 'News Feed', NULL, NULL, '<p>Some advices</p>', NULL, NULL, NULL),
+(36, 35, '2005-08-20 20:00:00', '2020-08-05 21:59:54', 'news', NULL, NULL, NULL, 'news1 super text', 'title', NULL, 'review/review_36.png'),
+(37, 35, '2020-08-06 00:00:00', '2020-08-06 12:57:22', 'news', NULL, NULL, NULL, 'icon-compass', 'Branding', NULL, 'review/review_37.jpg'),
+(38, 0, '2020-08-06 16:04:47', '2020-08-06 13:24:13', 'contact', 'Contacts', NULL, NULL, '<p>Aviable throw the Viber, Telegram, Fb and so on..</p>\r\n\r\n<div id=\"gtx-trans\" style=\"position: absolute; left: -152px; top: -6px;\">\r\n<div class=\"gtx-trans-icon\">&nbsp;</div>\r\n</div>', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `tbl_reset_password`
+--
+
+CREATE TABLE `tbl_reset_password` (
+  `id` bigint(20) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `activation_id` varchar(32) NOT NULL,
+  `agent` varchar(512) NOT NULL,
+  `client_ip` varchar(32) NOT NULL,
+  `isDeleted` tinyint(4) NOT NULL DEFAULT 0,
+  `createdBy` bigint(20) NOT NULL DEFAULT 1,
+  `createdDtm` datetime NOT NULL,
+  `updatedBy` bigint(20) DEFAULT NULL,
+  `updatedDtm` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `tbl_roles`
+--
+
+CREATE TABLE `tbl_roles` (
+  `roleId` tinyint(4) NOT NULL COMMENT 'role id',
+  `role` varchar(50) NOT NULL COMMENT 'role text'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `tbl_roles`
+--
+
+INSERT INTO `tbl_roles` (`roleId`, `role`) VALUES
+(1, 'Admin'),
+(2, 'Manager'),
+(3, 'Employee');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `tbl_users`
+--
+
+CREATE TABLE `tbl_users` (
+  `userId` int(11) NOT NULL,
+  `login` varchar(255) DEFAULT NULL,
+  `email` varchar(128) NOT NULL COMMENT 'login email',
+  `password` varchar(128) NOT NULL COMMENT 'hashed login password',
+  `name` varchar(128) DEFAULT NULL COMMENT 'full name of user',
+  `mobile` varchar(20) DEFAULT NULL,
+  `roleId` tinyint(4) NOT NULL,
+  `isDeleted` tinyint(4) NOT NULL DEFAULT 0,
+  `createdBy` int(11) NOT NULL,
+  `createdDtm` datetime NOT NULL,
+  `updatedBy` int(11) DEFAULT NULL,
+  `updatedDtm` datetime DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `tbl_users`
+--
+
+INSERT INTO `tbl_users` (`userId`, `login`, `email`, `password`, `name`, `mobile`, `roleId`, `isDeleted`, `createdBy`, `createdDtm`, `updatedBy`, `updatedDtm`) VALUES
+(1, 'admin', 'admin@example.com', '$2y$10$.arFsAy8Re4Vz0.lIr4vlOc5sRADYHDttcvSIJF6l7MzQZRiHSWLm', 'System Administrator', '9890098900', 1, 0, 0, '2015-07-01 18:56:49', 1, '2018-01-05 05:56:34'),
+(2, 'manager', 'manager@example.com', '$2y$10$quODe6vkNma30rcxbAHbYuKYAZQqUaflBgc4YpV9/90ywd.5Koklm', 'Manager', '9890098900', 2, 0, 1, '2016-12-09 17:49:56', 1, '2018-01-12 07:22:11'),
+(3, 'emp', 'employee@example.com', '$2y$10$UYsH1G7MkDg1cutOdgl2Q.ZbXjyX.CSjsdgQKvGzAgl60RXZxpB5u', 'Employee', '9890098900', 3, 0, 1, '2016-12-09 17:50:22', 3, '2018-01-04 07:58:28'),
+(9, NULL, 'wikk@bigmir.net', '$2y$10$OkSvJVpXDA4F8RV7O.omLOZGQgOjucdWUQafj3wSu8fB8VO76IYHC', 'Виктор Виктор Давиденко', '0936313718', 2, 0, 1, '2020-08-02 20:42:41', NULL, NULL),
+(10, NULL, 'wikk@bigmir.net2', '$2y$10$FrIL7M1bvpseqJKKiocJXuXJbvPoiRMHonogg8mfyRGhs2ISPfrpm', 'Виктор 2', '0936313718', 2, 1, 1, '2020-08-02 20:44:07', 1, '2020-08-02 20:50:02'),
+(11, NULL, 'wikk@bigmir.net3', '$2y$10$oEyvi0zgh2qAkQsUdmzzx.60qEUhqpMm5KOdAwixU4NOnXMC4bqnC', 'Виктор 1', '0936313718', 2, 0, 1, '2020-08-02 20:44:29', 1, '2020-08-02 20:44:48');
+
+--
+-- Индексы сохранённых таблиц
+--
+
+--
+-- Индексы таблицы `ci_sessions`
+--
+ALTER TABLE `ci_sessions`
+  ADD PRIMARY KEY (`session_id`),
+  ADD KEY `last_activity_idx` (`last_activity`);
+
+--
+-- Индексы таблицы `tbl_last_login`
+--
+ALTER TABLE `tbl_last_login`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `tbl_pages`
+--
+ALTER TABLE `tbl_pages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `tbl_reset_password`
+--
+ALTER TABLE `tbl_reset_password`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `tbl_roles`
+--
+ALTER TABLE `tbl_roles`
+  ADD PRIMARY KEY (`roleId`);
+
+--
+-- Индексы таблицы `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  ADD PRIMARY KEY (`userId`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
+--
+
+--
+-- AUTO_INCREMENT для таблицы `tbl_last_login`
+--
+ALTER TABLE `tbl_last_login`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+
+--
+-- AUTO_INCREMENT для таблицы `tbl_pages`
+--
+ALTER TABLE `tbl_pages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT для таблицы `tbl_reset_password`
+--
+ALTER TABLE `tbl_reset_password`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `tbl_roles`
+--
+ALTER TABLE `tbl_roles`
+  MODIFY `roleId` tinyint(4) NOT NULL AUTO_INCREMENT COMMENT 'role id', AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT для таблицы `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

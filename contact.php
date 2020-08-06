@@ -1,4 +1,6 @@
-<?php
+<?
+
+
 /*
  *  CONFIGURE EVERYTHING HERE
  */
@@ -14,7 +16,7 @@ $subject = 'New message from contact form';
 
 // form field names and their translations.
 // array variable name => Text to appear in the email
-$fields = array('name' => 'Name', 'surname' => 'Surname', 'phone' => 'Phone', 'email' => 'Email', 'message' => 'Message'); 
+$fields = array('name' => 'Name',  'email' => 'Email', 'title' => 'Title', 'message' => 'Message'); 
 
 // message that will be displayed when everything is OK :)
 $okMessage = 'Message successfully send. Thank you, I will get back to you soon!';
@@ -22,9 +24,6 @@ $okMessage = 'Message successfully send. Thank you, I will get back to you soon!
 // If something goes wrong, we will display this message.
 $errorMessage = 'There was an error while submitting the form. Please try again later';
 
-/*
- *  LET'S DO THE SENDING
- */
 
 // if you are not debugging and don't need error reporting, turn this off by error_reporting(0);
 error_reporting(E_ALL & ~E_NOTICE);
@@ -32,8 +31,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 try
 {
 
-    if(count($_POST) == 0) throw new \Exception('Form is empty');
-            
+    if(count($_POST) == 0) throw new Exception('Form is empty');
+    
     $emailText = "You have a new message from your contact form\n=============================\n";
 
     foreach ($_POST as $key => $value) {
@@ -50,9 +49,11 @@ try
         'Return-Path: ' . $from,
     );
     
+    $headers_plain =     implode("\n", $headers);
+    
     // Send email
-    mail($sendTo, $subject, $emailText, implode("\n", $headers));
-
+    mail($sendTo, $subject, $emailText, $headers_plain);
+    
     $responseArray = array('type' => 'success', 'message' => $okMessage);
 }
 catch (\Exception $e)

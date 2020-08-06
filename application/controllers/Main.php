@@ -48,7 +48,13 @@ class main extends BaseContentController
                 $this->data['services'] = $this->content_model->getPage('services');
                 $this->data['servicesIcons'] = $this->content_model->getPage('services', $this->data['services']->id, 30);
                 $this->data['project'] = $this->content_model->getPage('projects');
-                $this->data['projectsImg'] = $this->content_model->getPage('services', $this->data['project']->id, 30);
+                $this->data['projectsImg'] = $this->content_model->getPage('projects', $this->data['project']->id, 30);
+                $this->data['freelance'] = $this->content_model->getPage('freelance');
+                $this->data['review'] = $this->content_model->getPage('reviews');
+                $this->data['reviewsList'] = $this->content_model->getPage('reviews', $this->data['review']->id, 30);
+                $this->data['news'] = $this->content_model->getPage('news');
+                $this->data['newsList'] = $this->content_model->getPage('news', $this->data['news']->id, 30);
+                $this->data['contact'] = $this->content_model->getPage('contact');
             }
         }
         
