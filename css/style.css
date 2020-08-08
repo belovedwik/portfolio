@@ -260,7 +260,7 @@ img {
 
 
 .banner-area{
-    background-image: url(../images/home/1.jpg); /*--edit image--*/                 
+    background-image: url(../images/home/base.jpg); /*--edit image--*/                 
     background-position: center;
     background-size:cover; 
     position: relative;

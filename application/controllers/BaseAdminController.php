@@ -100,7 +100,7 @@ class BaseAdminController extends BaseController {
     protected function UploadImage($fileName, $width = 350, $height = 350, $folder = '')
     {
         $config['upload_path']      = './images/'.$folder;
-        $config['allowed_types']    = 'gif|jpg|png';
+        $config['allowed_types']    = 'gif|jpg|png|jpeg';
         $config['file_name']    = $fileName;
         $this->load->library('upload', $config);
         $imgLink = "";

@@ -45,7 +45,13 @@
     <link rel="stylesheet" href="css/magnific-popup.css">
     
     <!--theme css-->
-    <link rel="stylesheet" href="css/style.css">             
+    <link rel="stylesheet" href="css/style.css">      
+    
+    <!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZFQFNFMC4K"></script>
+<script>
+  window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date());gtag('config', 'G-ZFQFNFMC4K');
+</script>
 </head>
 <body>
     
@@ -91,7 +97,7 @@
     
     <!--Starts Home-->
     <div class="banner-area cus-border" id="home">
-        <a class="video-bg" data-property="{videoURL:'https://www.youtube.com/watch?v=2OEL4P1Rz04',containment:'#home'}"></a>
+        <a class="video-bg" data-property="{videoURL:'https://youtu.be/zh_NiHHsgyk',containment:'#home'}"></a>
         <div class="banner-table">
             <div class="banner-table-cell">
                 <div class="welcome-text">
@@ -204,8 +210,14 @@
                                     $unic = array();
                                     foreach($projectsImg as $proj)
                                     {
-                                        if (!in_array($proj->short_text, $unic))
-                                            $unic[] = $proj->short_text;
+                                        $projTxt = explode(' ', trim($proj->short_text) );
+                                        
+                                        foreach($projTxt as $proj)
+                                        {
+                                            if (!in_array( trim($proj), $unic))
+                                                $unic[] = $proj;
+                                        }
+                                      
                                     }
                                     
                                     foreach($unic as $cat)
@@ -227,7 +239,7 @@
                         foreach($projectsImg as $proj)
                         {
                         ?>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 single-port <?= $proj->short_text ?>" style="position: absolute; left: 0px; top: 0px;">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 single-port <?= $proj->short_text ?>" >
 							<div class="project-item">
 								<a class="zoom1" href="images/<?= $proj->image?>"><img alt="portfolio image" src="images/<?= $proj->image?>">
 								<div class="overlay">
@@ -241,72 +253,6 @@
                         <?
                         }
                         ?>
-						<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 single-port graphics" style="position: absolute; left: 0px; top: 0px;">
-							<div class="project-item">
-								<a class="zoom1" href="images/portfolio/port-5.jpg"><img alt="portfolio image" src="images/portfolio/port-1.jpg">
-								<div class="overlay">
-									<div class="overlay-inner">
-										<h4>Category</h4>
-										<p>Project Title</p>
-									</div>
-								</div></a>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 single-port web apps" style="position: absolute; left: 380px; top: 0px;">
-							<div class="project-item">
-								<a class="zoom1" href="images/portfolio/port-5.jpg"><img alt="portfolio image" src="images/portfolio/port-2.jpg"> <!--edit image-->
-								<div class="overlay">
-									<div class="overlay-inner">
-										<h4>Category</h4>
-										<p>Project Title</p>
-									</div>
-								</div></a>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 single-port graphics software" style="position: absolute; left: 760px; top: 0px;">
-							<div class="project-item">
-								<a class="zoom1" href="images/portfolio/port-4.jpg"><img alt="portfolio image" src="images/portfolio/port-4.jpg"> <!--edit image-->
-								<div class="overlay">
-									<div class="overlay-inner">
-										<h4>Category</h4>
-										<p>Project Title</p>
-									</div>
-								</div></a>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 single-port apps" style="position: absolute; left: 0px; top: 285px;">
-							<div class="project-item">
-								<a class="zoom1" href="images/portfolio/port-3.jpg"><img alt="portfolio image" src="images/portfolio/port-3.jpg"> <!--edit image-->
-								<div class="overlay">
-									<div class="overlay-inner">
-										<h4>Category</h4>
-										<p>Project Title</p>
-									</div>
-								</div></a>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 single-port software apps" style="position: absolute; left: 380px; top: 285px;">
-							<div class="project-item">
-								<a class="zoom1" href="images/portfolio/port-5.jpg"><img alt="portfolio image" src="images/portfolio/port-5.jpg"> <!--edit image-->
-								<div class="overlay">
-									<div class="overlay-inner">
-										<h4>Category</h4>
-										<p>Project Title</p>
-									</div>
-								</div></a>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 single-port web" style="position: absolute; left: 760px; top: 285px;">
-							<div class="project-item">
-								<a class="zoom1" href="images/portfolio/port-6.jpg"><img alt="portfolio image" src="images/portfolio/port-6.jpg"> <!--edit image-->
-								<div class="overlay">
-									<div class="overlay-inner">
-										<h4>Category</h4>
-										<p>Project Title</p>
-									</div>
-								</div></a>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>

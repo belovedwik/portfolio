@@ -125,7 +125,7 @@ class Admin extends BaseAdminController
                 $subFields = array(
                    'short_text' => array('Icon class', 'trim|required|min_length[3]', 'text'),
                    'name' => array('Title', 'trim|required|min_length[3]', 'text'),
-                   'full_text' => array('Short desc ', 'trim|xss_clean', 'text'),
+                   'full_text' => array('Short desc ', 'trim|required', 'text'),
                    'createDT' => array('Created On', 'trim|required|min_length[3]', 'date'),
                    );
                 
@@ -248,8 +248,8 @@ class Admin extends BaseAdminController
                 $src = $this->UploadImage($imgSetting['fileName'] . $rowId, $imgSetting['width'], $imgSetting['height'], $imgSetting['folder'] );
                 $this->admin_model->updatePage($rowId, array('image'=> $src));
             }
-
-            redirect( adminPath . '/'. $page);
+            if ($rowId)
+                redirect( adminPath . '/'. $page);
         }
         $this->data['recordList'] = $this->admin_model->getPage($page, $parentId, 100 );
     }
