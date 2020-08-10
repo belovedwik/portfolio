@@ -19,6 +19,12 @@ class BaseController extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model('base_model');
+        
+         if (!$this->session->has_userdata('lng'))
+            $this->session->set_userdata(array('lng'=> 'en'));
+        $this->load->helper('language');
+        $this->lang->load('admin',$this->session->userdata('lng'));
+       
      }
     
 	/**
@@ -39,7 +45,7 @@ class BaseController extends CI_Controller {
 	 */
 	function isLoggedIn() {
 		$isLoggedIn = $this->session->userdata ( 'isLoggedIn' );
-		
+   	
 		if (! isset ( $isLoggedIn ) || $isLoggedIn != TRUE) {
 			redirect ( 'auth' );
 		} else {

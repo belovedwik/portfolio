@@ -9,8 +9,10 @@ class admin_model extends Base_model
         $this->db->trans_start();
         
         $this->db->where('id', $id);
+        $this->db->where('Language', $this->session->userdata('lng'));
+        
         $this->db->update('tbl_pages', $data);
-          
+       
         $this->db->trans_complete();
     }
     
@@ -29,11 +31,8 @@ class admin_model extends Base_model
     function deleteRow($rowId)
     {
         $this->db->trans_start();
-
         $ok = $this->db->delete('tbl_pages', array('id' => $rowId)); 
-        
         $this->db->trans_complete();
-        
         return $ok;
     }
     

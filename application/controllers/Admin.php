@@ -15,14 +15,13 @@ class Admin extends BaseAdminController
     public function __construct()
     {
         parent::__construct();
+        
         $this->isLoggedIn();
-        $this->data['isLogged'] = true;
         $this->data['userinfo'] = $this -> global;
         $this->load->model('admin_model');
+       
     }
 
-
-    
     /**
      * Index Page for this controller.
      */
@@ -39,9 +38,15 @@ class Admin extends BaseAdminController
 
         switch($page)
         {
+            case "switch_lang": 
+            {
+                $this->session->set_userdata(array('lng'=> $subpage));
+                redirect( adminPath );
+            }
+            break;
             case "contact": 
             {
-                $this->data['pageTitle'] = 'Contact';
+                $this->data['pageTitle'] = lang('contact');
                 $variables = array(
                     'header' => array('Header', 'trim|required|min_length[3]', 'text'),
                     'short_text' => array('Short Text', 'trim|required|min_length[20]', 'textarea'),
@@ -54,7 +59,7 @@ class Admin extends BaseAdminController
             break;
             case "about": 
             {
-                $this->data['pageTitle'] = 'About';
+                $this->data['pageTitle'] = lang('about');
                 $variables = array(
                     'header' => array('Header', 'trim|required|min_length[3]', 'text'),
                     'short_text' => array('Short Text', 'trim|required|min_length[20]', 'textarea'),
@@ -70,7 +75,7 @@ class Admin extends BaseAdminController
             case "projects": 
             {
                 // project desc
-                $this->data['pageTitle'] = 'Projects';
+                $this->data['pageTitle'] = lang('projects');
                 $variables = array(
                     'header' => array('Header', 'trim|required|min_length[3]', 'text'),
                     'short_text' => array('Project short text', 'trim|required|min_length[10]', 'textarea'),
@@ -104,7 +109,7 @@ class Admin extends BaseAdminController
             case "services": 
             {
                 // project desc
-                $this->data['pageTitle'] = 'Services';
+                $this->data['pageTitle'] = lang('services');
                 $variables = array(
                     'header' => array('Header', 'trim|required|min_length[3]', 'text'),
                     'short_text' => array('Project short text', 'trim|required|min_length[10]', 'textarea'),
@@ -137,7 +142,7 @@ class Admin extends BaseAdminController
             case "reviews": 
             {
                 // project desc
-                $this->data['pageTitle'] = 'Reviews';
+                $this->data['pageTitle'] = lang('reviews');
                 $variables = array(
                     'header' => array('Header', 'trim|required|min_length[3]', 'text'),
                     'short_text' => array('Project short text', 'trim|required|min_length[10]', 'textarea'),
@@ -172,7 +177,7 @@ class Admin extends BaseAdminController
             case "news": 
             {
                 // project desc
-                $this->data['pageTitle'] = 'News';
+                $this->data['pageTitle'] = lang('news');
                 $variables = array(
                     'header' => array('Header', 'trim|required|min_length[3]', 'text'),
                     'short_text' => array('Project short text', 'trim|required|min_length[10]', 'textarea'),
@@ -205,7 +210,7 @@ class Admin extends BaseAdminController
             break;
             case "freelance": 
             {
-                $this->data['pageTitle'] = 'Freelance';
+                $this->data['pageTitle'] = lang('freelance');
                 $variables = array(
                     'header' => array('Header', 'trim|required|min_length[3]', 'text'),
                     'short_text' => array('Short Text', 'trim|required|min_length[20]', 'textarea'),

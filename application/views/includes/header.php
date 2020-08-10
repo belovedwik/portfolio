@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><? //echo $pageTitle; ?> Admin page </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    
+    <base href="<?= base_url()?>" />
+      
     <!-- Bootstrap 3.3.4 -->
     <link href="<?= base_url(); ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- FontAwesome 4.3.0 -->
@@ -54,12 +57,41 @@
           </a>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <li class="dropdown tasks-menu">
+                    <span style="margin-top: 15px;display: block;"><?= lang('welcome'); ?></span>
+                </li>
+              <li class="dropdown tasks-menu">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
+                    <img src="images/lang/<?= $this->session->userdata('lng') ?>.png"  style="width:25px"/>
+                  </a>
+                  <ul class="dropdown-menu pull-right" style="min-width: 78px;">
+                    <li>
+                      <a href="<?= base_url() . adminPath ?>/switch_lang/en/">
+                        <img src="images/lang/en.png" style="width:25px"/>
+                        <span>EN</span>
+                      </a>
+                    </li>
+                    <li class="active">
+                      <a href="<?= base_url() . adminPath ?>/switch_lang/ua/">
+                        <img src="images/lang/ua.png" style="width:25px"/>
+                        <span>UA</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="<?= base_url() . adminPath ?>/switch_lang/ru/">
+                        <img src="images/lang/ru.png" style="width:25px"/>
+                        <span>RU</span>
+                      </a>
+                    </li>
+                  </ul>
+
+              </li>
               <li class="dropdown tasks-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                   <i class="fa fa-history"></i>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="header"> Last Loginfav : <i class="fa fa-clock-o"></i> <?= empty($userinfo['last_login']) ? "First Time Login" : $userinfo['last_login']; ?></li>
+                  <li class="header"> Last Login : <i class="fa fa-clock-o"></i> <?= empty($userinfo['last_login']) ? "First Time Login" : $userinfo['last_login']; ?></li>
                 </ul>
               </li>
               <!-- User Account: style can be found in dropdown.less -->
@@ -100,59 +132,59 @@
         <section class="sidebar">
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">MAIN NAVIGATION</li>
+            <li class="header"><?= lang('navigation') ?></li>
             <li>
               <a href="<?= base_url() . adminPath; ?>">
                 <i class="fa fa-dashboard"></i> 
-                <span>Dashboard</span>
+                <span><?= lang('dashboard') ?></span>
               </a>
             </li>
             <li>
               <a href="<?= base_url() . adminPath; ?>/about">
                 <i class="fa fa-address-card-o"></i>
-                <span>About</span>
+                <span><?= lang('about') ?></span>
               </a>
             </li>
             <li>
               <a href="<?= base_url() . adminPath; ?>/services">
                 <i class="fa fa-cubes"></i>
-                <span>Services</span>
+                <span><?= lang('services') ?></span>
               </a>
             </li>
             <li>
               <a href="<?= base_url() . adminPath; ?>/projects">
                 <i class="fa fa-briefcase"></i>
-                <span>Projects</span>
+                <span><?= lang('projects') ?></span>
               </a>
             </li>
             <li>
               <a href="<?= base_url() . adminPath; ?>/reviews">
                 <i class="fa fa-grav"></i>
-                <span>Reviews</span>
+                <span><?= lang('reviews') ?></span>
               </a>
             </li>
             <li>
               <a href="<?= base_url() . adminPath; ?>/news">
                 <i class="fa fa-grav"></i>
-                <span>News</span>
+                <span><?= lang('news') ?></span>
               </a>
             </li>
             <li>
               <a href="<?= base_url() . adminPath; ?>/freelance">
                 <i class="fa fa-credit-card"></i>
-                <span>Freelance</span>
+                <span><?= lang('freelance') ?></span>
               </a>
             </li>
             <li>
               <a href="<?= base_url() . adminPath; ?>/contact">
                 <i class="fa fa-user-o"></i>
-                <span>Contact</span>
+                <span><?= lang('contact') ?></span>
               </a>
             </li>
             <li>
               <a href="<?= base_url() . adminPath; ?>/users" >
                 <i class="fa fa-users"></i>
-                <span>Users</span>
+                <span><?= lang('users') ?></span>
               </a>
             </li>
             <li class="treeview" style="display:none">

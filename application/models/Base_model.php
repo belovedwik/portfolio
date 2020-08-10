@@ -8,6 +8,7 @@ class Base_model extends CI_Model
         $this->db->from('tbl_pages');
         $this->db->where('pageType', $pageType);
         $this->db->where('parent', $parentID);
+        $this->db->where('Language', $this->session->userdata('lng'));
         
         $this->db->limit($limit);
         $res = $this->db->get()->result();
@@ -20,6 +21,7 @@ class Base_model extends CI_Model
         $this->db->select("*");
         $this->db->from('tbl_pages');
         $this->db->where('id', $rowId);
+        $this->db->where('Language', $this->session->userdata('lng'));
         $this->db->limit(1);
         $res = $this->db->get()->result();
         

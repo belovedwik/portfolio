@@ -10,7 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <!--template title-->
-    <title>Victor Davydenko - Personal Portfolio</title>   
+    <title><?= lang('me')?> - Personal Portfolio</title>   
+    
+    <base href="<?= base_url()?>" />
     
     <!--favicon-->
     <link rel="apple-touch-icon" sizes="32x32" href="favicon/favicon-32x32.png">
@@ -78,15 +80,46 @@
                             <div class="navbar-collapse collapse">
                                 <nav>
                                     <ul class="nav navbar-nav navbar-right">
-                                        <li class="active"><a class="smooth-menu" href="#home">Home</a></li>
-                                        <li><a class="smooth-menu" href="#about">About</a></li>
-                                        <li><a class="smooth-menu" href="#services">Services</a></li>
-                                        <li><a class="smooth-menu" href="#portfolio">Portfolio</a></li> 
-                                        <li><a class="smooth-menu" href="#blog">Blog</a></li> 
-                                        <li><a class="smooth-menu" href="#contact">Contact</a></li>
+                                        <li class="active"><a class="smooth-menu" href="#home"><?= lang('home') ?></a></li>
+                                        <li><a class="smooth-menu" href="#about"><?= lang('about') ?></a></li>
+                                        <li><a class="smooth-menu" href="#services"><?= lang('services') ?></a></li>
+                                        <li><a class="smooth-menu" href="#portfolio"><?= lang('portfolio') ?></a></li> 
+                                        <li><a class="smooth-menu" href="#blog"><?= lang('blog') ?></a></li> 
+                                        <li><a class="smooth-menu" href="#contact"><?= lang('contact') ?></a></li>
+                                        
+                                        <li class="dropdown language-selector">
+                                            <span style="color:lightcoral;">Language</span>  
+                                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
+                                            <img src="images/lang/<?= $this->session->userdata('lng') ?>.png"  style="width:25px"/>
+                                          </a>
+                                          <ul class="dropdown-menu pull-right" style="min-width: 78px;">
+                                            <li>
+                                              <a href="<?= base_url() ?>en/">
+                                                <img src="images/lang/en.png" style="width:25px"/>
+                                                <span>EN</span>
+                                              </a>
+                                            </li>
+                                            <li class="active">
+                                              <a href="<?= base_url() ?>ua/">
+                                                <img src="images/lang/ua.png" style="width:25px"/>
+                                                <span>UA</span>
+                                              </a>
+                                            </li>
+                                            <li>
+                                              <a href="<?= base_url() ?>ru/">
+                                                <img src="images/lang/ru.png" style="width:25px"/>
+                                                <span>RU</span>
+                                              </a>
+                                            </li>
+                                          </ul>
+                                        </li>
+                                        
                                     </ul>
+                                    
                                 </nav>
+                            
                             </div>
+                
                         </div>
                     </div>
                 </div>                
@@ -105,7 +138,7 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12"> 
                                 <div class="banner-text"> 
-                                    <h1>Victor Davydenko</h1>   
+                                    <h1><?= lang('me')?></h1>   
                                     <h2 class="text-affect">Text Effect</h2>    
                                     <p>
                                         <span><a target="_blank" href="https://fb.com/belovedwik"><i class="fa fa-facebook"></i></a></span>
@@ -145,7 +178,7 @@
                     <div class="about-text">
                         <h2><?= $about->name ?> </h2>
                         <?= $about->full_text ?>
-                        <a href="#portfolio" class="about-btn">my Work</a>
+                        <a href="#portfolio" class="about-btn"><?= lang('myWork')?></a>
                     </div>
                 </div>
             </div>
@@ -299,7 +332,7 @@
                     <div class="single-offer">
                         <h2><?= $freelance->header ?></h2>
                         <p><?= $freelance->short_text ?></p>
-                        <a href="#contact" class="offer-btn">Hire Me</a> 
+                        <a href="#contact" class="offer-btn"><?= lang('hire') ?></a> 
                     </div>
                 </div>
             </div>
@@ -368,7 +401,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input id="form_name" type="text" name="name" class="form-control" placeholder="Your Name" required="required" data-error="Name Required"> 
+                                    <input id="form_name" type="text" name="name" class="form-control" placeholder="<?= lang('yName') ?>" required="required" data-error="Name Required"> 
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>                            
@@ -376,7 +409,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input id="form_email" type="email" name="email" class="form-control" placeholder="Your Email" data-error="Email Required">
+                                    <input id="form_email" type="email" name="email" class="form-control" placeholder="<?= lang('Your') ?> Email" data-error="Email Required">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
@@ -384,7 +417,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input id="form_subject" type="text" name="title" class="form-control" placeholder="Your Topic" data-error="Subject Required">
+                                    <input id="form_subject" type="text" name="title" class="form-control" placeholder="<?= lang('yTitle') ?>" data-error="Subject Required">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
@@ -392,12 +425,12 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <textarea id="form_message" name="message" class="form-control" placeholder="Your Message" rows="4" required="required" data-error="What do want to know"></textarea>
+                                    <textarea id="form_message" name="message" class="form-control" placeholder="<?= lang('yMess') ?>" rows="4" required="required" data-error="What do want to know"></textarea>
                                     <div class="help-block with-errors"></div>  
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <button class="btn btn-send custom-button-4">Send message</button>
+                                <button class="btn btn-send custom-button-4"><?= lang('btn_sbm_mess') ?></button>
                             </div>
                         </div>
                     </div>
@@ -427,9 +460,13 @@
     
   
     
-    
-    
     <!--Latest version JQuery-->
+    <script src="js/jquery.min.js">
+        $(function(){
+    $('.selectpicker').selectpicker();
+});
+        
+        </script>
     <script src="js/jquery.min.js"></script>
 
     <!--Bootstrap js-->
